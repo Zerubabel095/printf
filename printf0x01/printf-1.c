@@ -9,30 +9,42 @@
 
 int _printf(const char *format, ...) 
 {
+	int _printf(const char *format, ...) {
+  int count = 0;
   va_list args;
-  int i;
-
   va_start(args, format);
-  for (i = 0; format[i] != '\0'; i++) {
-    if (format[i] == '%') {
-      i++;
-      switch (format[i]) {
-        case 'd':
-          putchar((int)va_arg(args, int));
+
+  for (; *format; format++) {
+    if (*format == '%') {
+      format++;
+      switch (*format) {
+        case 'c': {
+          char c = va_arg(args, int);
+          count += printf("%c", c);
           break;
-        case 's':
-          puts((char *)va_arg(args, char *));
+        }
+        case 's': {
+          char *str = va_arg(args, char *);
+          count += printf("%s", str);
           break;
-        default:
-          putchar(format[i]);
+        }
+        case '%': {
+          count += printf("%%");
           break;
+        }
+        default: {
+          printf("Unknown conversion specifier: %c\n", *format);
+          count = -1;
+          break;
+        }
       }
     } else {
-      putchar(format[i]);
+      count += printf("%c", *format);
     }
   }
 
   va_end(args);
-  return i;
+  return count;
+}
 }
 
