@@ -59,4 +59,7 @@ Handle the following custom conversion specifier:
 15. *                                                                               
 All the above options work well together. 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28d83960e7b8dffb6bfdd76d508aeb8f902043af
